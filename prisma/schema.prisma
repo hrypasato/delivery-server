@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model clientes {
+  id        BigInt    @id @default(autoincrement())
+  nombre    String    @db.VarChar
+  direccion String    @db.VarChar
+  celular   String    @db.VarChar
+  pedidos   pedidos[]
+}
+
+model credenciales {
+  password    String?   @db.VarChar(255)
+  usuario     String?   @db.VarChar(255)
+  empleado_id BigInt
+  rol_id      BigInt
+  roles       roles     @relation(fields: [rol_id], references: [rol_id], onDelete: Cascade, onUpdate: NoAction, map: "fkj0fwgm8nfuir2l9gd7etdp7my")
+  empleados   empleados @relation(fields: [empleado_id], references: [empleado_id], onDelete: Cascade, onUpdate: NoAction, map: "fkr0q8qn5na93oosscx5rq2mndm")
+
+  @@id([empleado_id, rol_id])
+}
+
+model datos_empleados {
+  dato_empleado_id BigInt     @id @default(autoincrement())
+  direccion        String?    @db.VarChar(255)
+  esta_vacunado    Boolean?
+  fecha_nacimiento DateTime?  @db.Timestamp(6)
+  telefono_movil   String?    @db.VarChar(255)
+  empleado_id      BigInt?
+  empleados        empleados? @relation(fields: [empleado_id], references: [empleado_id], onDelete: Cascade, onUpdate: NoAction, map: "fkougn12i2agv4kr97rv84x1ay0")
+}
+
+model empleados {
+  empleado_id     BigInt            @id @default(autoincrement())
+  apellidos       String?           @db.VarChar(255)
+  correo          String?           @db.VarChar(255)
+  identificacion  String?           @unique(map: "uk_lp1baflmkk8dqjaqfq9ysotkv") @db.VarChar(255)
+  nombres         String?           @db.VarChar(255)
+  credenciales    credenciales[]
+  datos_empleados datos_empleados[]
+  vacunaciones    vacunaciones[]
+}
+
+model pedidos {
+  id           BigInt    @id @default(autoincrement())
+  cliente_id   BigInt
+  producto_id  BigInt
+  unidades     Int       @default(0)
+  completado   Boolean?  @default(false)
+  created_at   DateTime? @default(now()) @db.Timestamptz(6)
+  completed_at DateTime? @db.Timestamptz(6)
+  total        Float     @db.Real
+  clientes     clientes  @relation(fields: [cliente_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  productos    productos @relation(fields: [producto_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model productos {
+  id      BigInt    @id @default(autoincrement())
+  nombre  String?   @default("") @db.VarChar
+  precio  Float?    @default(0) @db.Real
+  url     String?   @default("")
+  pedidos pedidos[]
+}
+
+model prueba {
+  id         BigInt    @id @default(autoincrement())
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  data       String?   @default("")
+}
+
+model roles {
+  rol_id       BigInt         @id @default(autoincrement())
+  rol_nombre   String?        @db.VarChar(255)
+  credenciales credenciales[]
+}
+
+model vacunaciones {
+  vacunacion_id    BigInt    @id @default(autoincrement())
+  fecha_vacunacion DateTime? @db.Timestamp(6)
+  numero_dosis     Int?
+  empleado_id      BigInt
+  vacuna_id        BigInt
+  vacunas          vacunas   @relation(fields: [vacuna_id], references: [vacuna_id], onDelete: Cascade, onUpdate: NoAction, map: "fkd5km615994m5teilqg52plwnd")
+  empleados        empleados @relation(fields: [empleado_id], references: [empleado_id], onDelete: Cascade, onUpdate: NoAction, map: "fktkn1bxfba8cte6dyxor7bs3vu")
+}
+
+model vacunas {
+  vacuna_id     BigInt         @id @default(autoincrement())
+  vacuna_nombre String?        @db.VarChar(255)
+  vacunaciones  vacunaciones[]
+}
