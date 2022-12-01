@@ -12,6 +12,23 @@ const getAllPedidos = async (req = request, res = response) => {
 }
 
 const getPedidosPendientes = async (req = request, res = response) =>{
+    /**
+     *  Por defecto lista todos los pedidos no completados.
+     *  / -> {
+     *      ...,
+     *      complete:false,
+     *  }
+     * 
+     *  El parámetro "cliente" permite listar los pedidos no completados
+     *  de un cliente en específico     
+     * ?cliente=3 ->  {
+     *      ...,
+     *      cliente_id:3,
+     *      complete:false,
+     *  }
+     * 
+     */
+    
     const { cliente } = req.query;
     
     const where = { completado:false };
@@ -32,15 +49,19 @@ const getPedidosPendientes = async (req = request, res = response) =>{
 
 const createPedido = async (req = request, res = response) => {
     /**
-     * cliente:int -> id del cliente
-     * producto:int -> id del producto
-     * unidades:int -> numero de unidades del producto
+     *  {
+     *      cliente:int -> id del cliente
+     *      producto:int -> id del producto
+     *      unidades:int -> numero de unidades del producto
+     *      total: int -> precio final de la transaccion
+     *  }
      */
-    const { cliente, producto, unidades } = req.body;
+    const { cliente, producto, unidades, total } = req.body;
     const pedidoToCreate = {
         cliente_id:cliente,
         producto_id:producto,
         unidades,
+        total,
     }
 
     const newPedido = await PedidoService.createPedido(pedidoToCreate);
@@ -52,6 +73,17 @@ const createPedido = async (req = request, res = response) => {
 }
 
 const completePedido = async (req = request, res = response) => {
+    /**
+     * id:str -> identificador del pedido
+     * Marca el pedido como completado.
+     * 
+     *  {
+     *      ...,
+     *      complete:true,
+     *  }
+     * 
+     */
+    
     const { id } = req.params;
     const pedidoId = parseInt(id);
     

@@ -1,4 +1,3 @@
-const ProductoService = require('../productos/productoService');
 const Pedido = require('./pedido');
 
 const getPedidos = async ( filterparams ) => {
@@ -8,12 +7,8 @@ const getPedidos = async ( filterparams ) => {
 
 
 const createPedido = async ( args ) => {
-    const { producto_id, unidades } = args;
-    const producto = await ProductoService.getProductoBy({ id:producto_id });
 
-    const total = producto.precio * unidades; 
-
-    const newPedido = await Pedido.createPedido({ ...args, total });
+    const newPedido = await Pedido.createPedido({ ...args });
     
     return newPedido;
 }
