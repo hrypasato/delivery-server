@@ -50,19 +50,14 @@ const getPedidosPendientes = async (req = request, res = response) =>{
 const createPedido = async (req = request, res = response) => {
     /**
      *  {
-     *      cliente:int -> id del cliente
-     *      producto:int -> id del producto
+     *      cliente_id:int -> id del cliente
+     *      producto_id:int -> id del producto
      *      unidades:int -> numero de unidades del producto
      *      total: int -> precio final de la transaccion
      *  }
      */
-    const { cliente, producto, unidades, total } = req.body;
-    const pedidoToCreate = {
-        cliente_id:cliente,
-        producto_id:producto,
-        unidades,
-        total,
-    }
+    const { body } = req.body;
+    const pedidoToCreate = { ...body }
 
     const newPedido = await PedidoService.createPedido(pedidoToCreate);
     
