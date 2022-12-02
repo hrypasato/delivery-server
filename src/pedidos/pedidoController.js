@@ -56,8 +56,8 @@ const createPedido = async (req = request, res = response) => {
      *      total: int -> precio final de la transaccion
      *  }
      */
-    const { body } = req.body;
-    const pedidoToCreate = { ...body }
+    const { cliente_id, producto_id, unidades, total } = req.body;
+    const pedidoToCreate = { cliente_id, producto_id, unidades, total }
 
     const newPedido = await PedidoService.createPedido(pedidoToCreate);
     
