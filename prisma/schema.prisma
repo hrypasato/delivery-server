@@ -95,3 +95,9 @@ model vacunas {
   vacuna_nombre String?        @db.VarChar(255)
   vacunaciones  vacunaciones[]
 }
+
+model motorizados {
+  id     BigInt  @id(map: "motorizado_pkey") @default(autoincrement())
+  nombre String  @default("") @db.VarChar
+  token  String? @default("")
+}
