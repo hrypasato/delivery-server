@@ -1,5 +1,15 @@
 const database = require('../database');
 
+const findMotorizados = async ( filterparams ) => {
+    const motorizados = await database.motorizados.findMany({
+        where:{
+            ...filterparams,
+        }
+    });
+
+    return motorizados;
+}
+
 const findMotorizado = async ( filterparams ) => {
     const motorizado = await database.motorizados.findUnique({
         where:{
@@ -37,5 +47,6 @@ const updateMotorizado = async ( filterparams, fields ) => {
 module.exports = {
     createMotorizado,
     findMotorizado,
+    findMotorizados,
     updateMotorizado,
 }
