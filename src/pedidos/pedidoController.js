@@ -1,6 +1,7 @@
 const { request, response } = require("express")
 
 const PedidoService = require('./pedidoService');
+const NotificacionController = require('../notificationes/notificacionController');
 
 
 const getAllPedidos = async (req = request, res = response) => {
@@ -10,6 +11,19 @@ const getAllPedidos = async (req = request, res = response) => {
         pedidos,
     });
 }
+
+const getPedido = async (req = request, res = response) => {
+    const { id } = req.params;
+    const pedidoId = parseInt(id);
+
+    const pedido = await PedidoService.getPedido({ id:pedidoId });
+
+    res.json({
+        ok:true,
+        pedido,
+    });
+}
+
 
 const getPedidosPendientes = async (req = request, res = response) =>{
     /**
@@ -61,6 +75,9 @@ const createPedido = async (req = request, res = response) => {
 
     const newPedido = await PedidoService.createPedido(pedidoToCreate);
     
+    const pedidoPoblado = await PedidoService.getPedido({ id:newPedido.id });
+    NotificacionController.notificarNuevoPedido(pedidoPoblado)
+
     res.json({
         ok:true,
         pedido:newPedido,
@@ -94,6 +111,7 @@ const completePedido = async (req = request, res = response) => {
 
 module.exports = {
     getAllPedidos,
+    getPedido,
     getPedidosPendientes,
     createPedido,
     completePedido,

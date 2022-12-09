@@ -5,6 +5,11 @@ const getPedidos = async ( filterparams ) => {
     return pedidos;
 }
 
+const getPedido = async ( filterparams ) => {
+    const pedido = await Pedido.findPedido(filterparams);
+    return pedido;
+}
+
 
 const createPedido = async ( args ) => {
 
@@ -21,6 +26,7 @@ const updatePedido = async ( pedidoId, args) => {
 
 module.exports = {
     getPedidos,
+    getPedido,
     createPedido,
     updatePedido,
 }
