@@ -8,20 +8,14 @@ datasource db {
 }
 
 model clientes {
-  id      BigInt @id @default(autoincrement())
   nombre  String @db.VarChar
   celular String @db.VarChar
+  id      String @id @db.VarChar
 }
 
 model productos {
-  id     BigInt  @id @default(autoincrement())
   nombre String? @default("") @db.VarChar
   precio Float?  @default(0) @db.Real
   url    String? @default("")
-}
-
-model motorizados {
-  id     BigInt  @id(map: "motorizado_pkey") @default(autoincrement())
-  nombre String  @default("") @db.VarChar
-  token  String? @default("")
+  id     String  @id @db.VarChar
 }

@@ -11,9 +11,8 @@ const getAllProductos = async (req, res) => {
 
 const getProductoById = async (req = request, res = response) => {
     const { id } = req.params;
-    const productoId = parseInt(id);
 
-    const producto = await ProductoService.getProductoBy({ id:productoId });
+    const producto = await ProductoService.getProductoBy({ id });
     
     res.json({
         ok:true,
