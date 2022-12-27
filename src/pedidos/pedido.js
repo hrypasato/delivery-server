@@ -1,25 +1,12 @@
-const { postgres } = require('../database');
-const { listExclude, exclude } = require('../helpers');
-
-const pedidosExcludeFields = ['cliente_id', 'producto_id']; 
+const PedidoSchema = require('./pedidoSchema');
+const { exclude } = require('../helpers');
 
 const clientes = { clientes:true };
 const productos = { productos:true };
 
 const findPedidos = async ( filterparams ) => {
-    const pedidos = await postgres.pedidos.findMany({
-        where:{
-            ...filterparams,
-        },
-        include:{
-            ...clientes,
-            ...productos,
-        },
-    });
-
-    const listPedidos = listExclude(pedidos, pedidosExcludeFields);
-
-    return listPedidos;
+    const pedidos = await PedidoSchema.find();
+    return pedidos;
 }
 
 
