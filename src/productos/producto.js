@@ -1,12 +1,12 @@
-const database = require('../database');
+const { postgres } = require('../database');
 
 const getAllProductos = async () => {
-    const productos = await database.productos.findMany();
+    const productos = await postgres.productos.findMany();
     return productos;
 }
 
 const getProducto = async ( args ) => {
-    const producto = await database.productos.findUnique({
+    const producto = await postgres.productos.findUnique({
         where:{
             ...args,
         }

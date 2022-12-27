@@ -1,4 +1,4 @@
-const database = require('../database');
+const { postgres } = require('../database');
 const { listExclude, exclude } = require('../helpers');
 
 const pedidosExcludeFields = ['cliente_id', 'producto_id']; 
@@ -7,7 +7,7 @@ const clientes = { clientes:true };
 const productos = { productos:true };
 
 const findPedidos = async ( filterparams ) => {
-    const pedidos = await database.pedidos.findMany({
+    const pedidos = await postgres.pedidos.findMany({
         where:{
             ...filterparams,
         },
@@ -24,7 +24,7 @@ const findPedidos = async ( filterparams ) => {
 
 
 const findPedido = async ( filterparams ) => {
-    const pedidoResp = await database.pedidos.findUnique({
+    const pedidoResp = await postgres.pedidos.findUnique({
         where:{
             ...filterparams,
         },
@@ -38,12 +38,12 @@ const findPedido = async ( filterparams ) => {
 }
 
 const createPedido = async ( pedido ) => {
-    const newPedido = await database.pedidos.create( { data:{ ...pedido } });
+    const newPedido = await postgres.pedidos.create( { data:{ ...pedido } });
     return newPedido;
 }
 
 const updatePedido = async ( filterparams, fields ) => {
-    const pedidoUpdated = await database.pedidos.update({
+    const pedidoUpdated = await postgres.pedidos.update({
         where:{
             ...filterparams,
         },

@@ -1,5 +1,10 @@
-const { PrismaClient } = require('@prisma/client');
+const { postgresDBConnection } = require('./postgres');
+const { mongoDBConnection } = require('./mongodb');
 
-const prisma = new PrismaClient();
+const postgres = postgresDBConnection();
+const mongodb = mongoDBConnection();
 
-module.exports = prisma
+module.exports = {
+    postgres,
+    mongodb,
+}

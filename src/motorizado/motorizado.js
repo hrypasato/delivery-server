@@ -1,7 +1,7 @@
-const database = require('../database');
+const { postgres } = require('../database');
 
 const findMotorizados = async ( filterparams ) => {
-    const motorizados = await database.motorizados.findMany({
+    const motorizados = await postgres.motorizados.findMany({
         where:{
             ...filterparams,
         }
@@ -11,7 +11,7 @@ const findMotorizados = async ( filterparams ) => {
 }
 
 const findMotorizado = async ( filterparams ) => {
-    const motorizado = await database.motorizados.findUnique({
+    const motorizado = await postgres.motorizados.findUnique({
         where:{
             ...filterparams,
         }
@@ -21,7 +21,7 @@ const findMotorizado = async ( filterparams ) => {
 }
 
 const createMotorizado = async ( motorizado ) => {
-    const newMotorizado = await database.motorizados.create({
+    const newMotorizado = await postgres.motorizados.create({
         data:{
             ...motorizado,
         }
@@ -31,7 +31,7 @@ const createMotorizado = async ( motorizado ) => {
 }
 
 const updateMotorizado = async ( filterparams, fields ) => {
-    const motorizadoUpdated = await database.motorizados.update({
+    const motorizadoUpdated = await postgres.motorizados.update({
         where:{
             ...filterparams,
         },
