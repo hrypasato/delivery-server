@@ -24,8 +24,10 @@ const findPedido = async ( filterparams ) => {
     return pedido;
 }
 
-const createPedido = async ( pedido ) => {
-    const newPedido = await postgres.pedidos.create( { data:{ ...pedido } });
+const createPedido = async ( args ) => {
+    const newPedido = new PedidoSchema({ ...args });
+
+    await newPedido.save()
     return newPedido;
 }
 

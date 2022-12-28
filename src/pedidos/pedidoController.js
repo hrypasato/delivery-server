@@ -64,19 +64,29 @@ const getPedidosPendientes = async (req = request, res = response) =>{
 const createPedido = async (req = request, res = response) => {
     /**
      *  {
-     *      cliente_id:int -> id del cliente
-     *      producto_id:int -> id del producto
-     *      unidades:int -> numero de unidades del producto
-     *      total: int -> precio final de la transaccion
+     *      cliente:string  -> id del cliente
+     *      comision:number -> id del producto
+     *      total:number    -> numero de unidades del producto
+     *      //ubicacion:string -> id de la ubicación del usuario
+     *      productos:[     -> lista con los ids de los productos y su cantidad
+     *      {
+     *          id:string -> id del producto solicitado 1
+     *          cantidad:int        -> numero de unidaddes
+     *      },
+     *      {
+     *          id:string -> id del producto solicitado 2
+     *          cantidad:int        -> numero de unidaddes
+     *      }
+     *      ...
+     *      ]
      *  }
      */
-    const { cliente_id, producto_id, unidades, total } = req.body;
-    const pedidoToCreate = { cliente_id, producto_id, unidades, total }
+    const data = req.body;
 
-    const newPedido = await PedidoService.createPedido(pedidoToCreate);
+    const newPedido = await PedidoService.createPedido({ ...data });
     
-    const pedidoPoblado = await PedidoService.getPedido({ id:newPedido.id });
-    NotificacionController.notificarNuevoPedido(pedidoPoblado)
+    //const pedidoPoblado = await PedidoService.getPedido({ id:newPedido.id });
+    //NotificacionController.notificarNuevoPedido(pedidoPoblado)
 
     res.json({
         ok:true,

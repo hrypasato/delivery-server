@@ -1,4 +1,5 @@
 const Pedido = require('./pedido');
+const ProdcutoService = require('../productos/productoService');
 
 const getPedidos = async ( filterparams ) => {
     const pedidos = await Pedido.findPedidos(filterparams);
@@ -12,8 +13,16 @@ const getPedido = async ( filterparams ) => {
 
 
 const createPedido = async ( args ) => {
-
-    const newPedido = await Pedido.createPedido({ ...args });
+    const{ ubicacion = {}, productos:productosIds = [], ...rest } = args;
+    
+    const productos = await Promise.all(
+        productosIds.map(async ({ id, cantidad }) => {
+            const { nombre, precio, tienda } = await ProdcutoService.getProductoBy({ id });
+            return { nombre, precio, cantidad, tienda };
+        })
+    );
+    
+    const newPedido = await Pedido.createPedido({ ubicacion, productos , ...rest });
     
     return newPedido;
 }
