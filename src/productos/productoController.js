@@ -20,7 +20,17 @@ const getProductoById = async (req = request, res = response) => {
     })
 }
 
+const getProductosByTienda = async(req = request, res = response) => {
+    const { tienda } = req.params;
+    const productos = await ProductoService.getAllProductosBy({ tienda });
+    res.json({
+        ok:true,
+        productos
+    })
+}
+
 module.exports = {
     getAllProductos,
     getProductoById,
+    getProductosByTienda,
 }

@@ -7,15 +7,32 @@ datasource db {
   url      = env("POSTGRES_URL")
 }
 
-model clientes {
-  nombre  String @db.VarChar
-  celular String @db.VarChar
-  id      String @id @db.VarChar
+model productos {
+  nombre      String? @default("") @db.VarChar
+  precio      Float?  @default(0) @db.Real
+  url         String? @default("")
+  id          String  @id @db.VarChar
+  descripcion String  @default("")
+  tienda      String  @db.VarChar
+  tiendas     tiendas @relation(fields: [tienda], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model productos {
-  nombre String? @default("") @db.VarChar
-  precio Float?  @default(0) @db.Real
-  url    String? @default("")
-  id     String  @id @db.VarChar
+model tiendas {
+  id              String      @id @default("") @db.VarChar
+  nombre          String      @default("") @db.VarChar
+  celular         String      @default("") @db.VarChar
+  url             String      @default("")
+  descripcion     String      @default("")
+  horario_abierto String      @default("") @db.VarChar
+  horario_cerrado String      @default("") @db.VarChar
+  activo          Boolean     @default(true)
+  productos       productos[]
+}
+
+model usuarios {
+  nombre  String   @db.VarChar
+  celular String   @db.VarChar
+  id      String   @id(map: "clientes_pkey") @db.VarChar
+  correo  String?  @default("") @db.VarChar
+  activo  Boolean? @default(true)
 }

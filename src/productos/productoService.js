@@ -5,6 +5,11 @@ const getAllProductos = async (filterparams) => {
     return productos;
 }
 
+const getAllProductosBy = async ( args ) => {
+    const productos = await Producto.getProductosBy( args );
+    return productos;
+}
+
 const getProductoBy = async ( args ) => {
     const producto = await Producto.getProducto( args );
     return producto;
@@ -12,5 +17,6 @@ const getProductoBy = async ( args ) => {
 
 module.exports = {
     getAllProductos,
+    getAllProductosBy,
     getProductoBy,
 }

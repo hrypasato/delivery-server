@@ -5,6 +5,15 @@ const getAllProductos = async () => {
     return productos;
 }
 
+const getProductosBy = async (args) => {
+    const productos = await postgres.productos.findMany({
+        where:{
+            ...args
+        }
+    })
+    return productos;
+}
+
 const getProducto = async ( args ) => {
     const producto = await postgres.productos.findUnique({
         where:{
@@ -16,5 +25,6 @@ const getProducto = async ( args ) => {
 
 module.exports = {
     getAllProductos,
+    getProductosBy,
     getProducto,
 }
