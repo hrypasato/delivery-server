@@ -4,8 +4,8 @@ const { exclude } = require('../helpers');
 const clientes = { clientes:true };
 const productos = { productos:true };
 
-const findPedidos = async ( filterparams ) => {
-    const pedidos = await PedidoSchema.find();
+const findPedidosBy = async ( filterparams ) => {
+    const pedidos = await PedidoSchema.find({ ...filterparams });
     return pedidos;
 }
 
@@ -46,7 +46,7 @@ const updatePedido = async ( filterparams, fields ) => {
 
 module.exports = {
     createPedido,
-    findPedidos,
+    findPedidosBy,
     findPedido,
     updatePedido,
 }

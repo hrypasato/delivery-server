@@ -1,7 +1,6 @@
 const { request, response } = require("express")
 
 const PedidoService = require('./pedidoService');
-const NotificacionController = require('../notificationes/notificacionController');
 
 
 const getAllPedidos = async (req = request, res = response) => {
@@ -35,9 +34,9 @@ const getPedidosPendientes = async (req = request, res = response) =>{
      * 
      *  El parámetro "cliente" permite listar los pedidos no completados
      *  de un cliente en específico     
-     * ?cliente=3 ->  {
+     * ?cliente=some-string-id ->  {
      *      ...,
-     *      cliente_id:3,
+     *      cliente:some-string-id,
      *      complete:false,
      *  }
      * 
@@ -45,12 +44,11 @@ const getPedidosPendientes = async (req = request, res = response) =>{
     
     const { cliente } = req.query;
     
-    const where = { completado:false };
+    const where = { finalizado:false };
 
 
     if(!!cliente){
-        const cliente_id = parseInt(cliente);
-        where['cliente_id'] = cliente_id;
+        where['cliente'] = cliente;
     }
 
     const pedidosPendientes = await PedidoService.getPedidos({ ...where })
@@ -84,9 +82,6 @@ const createPedido = async (req = request, res = response) => {
     const data = req.body;
 
     const newPedido = await PedidoService.createPedido({ ...data });
-    
-    //const pedidoPoblado = await PedidoService.getPedido({ id:newPedido.id });
-    //NotificacionController.notificarNuevoPedido(pedidoPoblado)
 
     res.json({
         ok:true,

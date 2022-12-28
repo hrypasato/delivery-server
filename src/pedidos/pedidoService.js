@@ -2,7 +2,7 @@ const Pedido = require('./pedido');
 const ProdcutoService = require('../productos/productoService');
 
 const getPedidos = async ( filterparams ) => {
-    const pedidos = await Pedido.findPedidos(filterparams);
+    const pedidos = await Pedido.findPedidosBy(filterparams);
     return pedidos;
 }
 
