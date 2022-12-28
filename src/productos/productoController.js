@@ -2,7 +2,7 @@ const { request, response } = require('express');
 const ProductoService = require('./productoService');
 
 const getAllProductos = async (req, res) => {
-    const productos = await ProductoService.getAllProductos();
+    const productos = await ProductoService.getAllProductosBy({});
     res.json({
         ok:true,
         productos,

@@ -1,10 +1,5 @@
 const Producto = require('./producto');
 
-const getAllProductos = async (filterparams) => {
-    const productos = await Producto.getAllProductos();
-    return productos;
-}
-
 const getAllProductosBy = async ( args ) => {
     const productos = await Producto.getProductosBy( args );
     return productos;
@@ -16,7 +11,6 @@ const getProductoBy = async ( args ) => {
 }
 
 module.exports = {
-    getAllProductos,
     getAllProductosBy,
     getProductoBy,
 }
