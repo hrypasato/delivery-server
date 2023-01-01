@@ -1,8 +1,8 @@
 const { request, response } = require("express");
 
-const MotorizadoService = require('./motorizadoService');
+const RepartidorService = require('./repartidorService');
 
-const createMotorizado = async ( req= request, res = response ) => {
+const createRepartidor = async ( req= request, res = response ) => {
     /**
      * {
      *      nombre: string -> nombre del motorizado
@@ -12,15 +12,15 @@ const createMotorizado = async ( req= request, res = response ) => {
 
     const { nombre, token } = req.body;
 
-    const newMotorizado = await MotorizadoService.createMotorizado({nombre, token});
+    const newRepartidor = await RepartidorService.createMotorizado({nombre, token});
     
     res.json({
         ok:true,
-        motorizado:newMotorizado,
+        motorizado:newRepartidor,
     })
 }
 
-const updateTokenMotorizado = async (req=request, res = response) =>{
+const updateRepartidor = async (req=request, res = response) =>{
     /**
      * id: str -> identificador del motorizado
      * 
@@ -36,7 +36,7 @@ const updateTokenMotorizado = async (req=request, res = response) =>{
     const { token } = req.body;
     const data = { token }
 
-    const motorizadoUpdated = await MotorizadoService.updateMotorizado(motorizadoId, { ...data });
+    const motorizadoUpdated = await RepartidorService.updateMotorizado(motorizadoId, { ...data });
     res.json({
         ok:true,
         motorizado:motorizadoUpdated,
@@ -44,6 +44,6 @@ const updateTokenMotorizado = async (req=request, res = response) =>{
 }
 
 module.exports = {
-    createMotorizado,
-    updateTokenMotorizado,
+    createRepartidor,
+    updateRepartidor,
 }
