@@ -1,9 +1,14 @@
 const { postgres } = require('../database');
 
+const usuarios = { usuarios:true };
+
 const findRepartidores = async ( filterparams ) => {
-    const repartidores = await postgres.motorizados.findMany({
+    const repartidores = await postgres.repartidores.findMany({
         where:{
             ...filterparams,
+        },
+        include:{
+            ...usuarios,
         }
     });
 

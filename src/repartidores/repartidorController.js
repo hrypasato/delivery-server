@@ -2,6 +2,30 @@ const { request, response } = require("express");
 
 const RepartidorService = require('./repartidorService');
 
+const getRepartidores = async ( req= request, res = response ) =>{
+    /**
+     * Por defecto lista todos los repartidores
+     * 
+     * ?disponible = 1 -> lista todos los repartidores disponibles
+     * ?disponible = 0 -> lista todos los repartidores NO disponibles
+     */
+
+    const { disponible } = req.query;
+    
+    const where = { };
+
+    if(!!disponible){
+        where['disponible'] = (disponible === '1');
+    }
+
+    const repartidores = await RepartidorService.getRepartidores({ ...where })
+    
+    res.json({
+        ok:true,
+        repartidores,
+    })
+}
+
 const createRepartidor = async ( req= request, res = response ) => {
     /**
      * {
@@ -44,6 +68,7 @@ const updateRepartidor = async (req=request, res = response) =>{
 }
 
 module.exports = {
+    getRepartidores,
     createRepartidor,
     updateRepartidor,
 }

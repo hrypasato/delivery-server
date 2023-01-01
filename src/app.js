@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 
 const v1PedidosRouter = require('./pedidos/pedidoRouter');
 const v1ProductosRouter = require('./productos/productoRouter');
-const v1RepartidoresRouter = require('./motorizado/motorizadoRouter');
+const v1RepartidoresRouter = require('./repartidores/repartidorRouter');
 const v1TiendasRouter = require('./tiendas/tiendaRouter');
 
 dotenv.config()

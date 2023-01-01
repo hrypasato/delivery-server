@@ -30,9 +30,17 @@ model tiendas {
 }
 
 model usuarios {
-  nombre  String   @db.VarChar
-  celular String   @db.VarChar
-  id      String   @id(map: "clientes_pkey") @db.VarChar
-  correo  String?  @default("") @db.VarChar
-  activo  Boolean? @default(true)
+  nombre       String        @db.VarChar
+  celular      String        @db.VarChar
+  id           String        @id(map: "clientes_pkey") @db.VarChar
+  correo       String?       @default("") @db.VarChar
+  activo       Boolean?      @default(true)
+  repartidores repartidores?
+}
+
+model repartidores {
+  id         Int      @id @default(autoincrement())
+  usuario    String   @unique @db.VarChar
+  disponible Boolean? @default(true)
+  usuarios   usuarios @relation(fields: [usuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

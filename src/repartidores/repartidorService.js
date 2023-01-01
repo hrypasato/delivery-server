@@ -10,8 +10,8 @@ const getRepartidor = async (filterparams) => {
     return repartidor
 }
 
-const getListRepartidores = async (filterparams)=>{
-    const repartidores = await Repartidor.findMotorizados(filterparams);
+const getRepartidores = async (filterparams)=>{
+    const repartidores = await Repartidor.findRepartidores(filterparams);
     return repartidores;
 }
 
@@ -35,7 +35,7 @@ const getListTokenRepartidores = async () => {
 module.exports = {
     createRepartidor,
     getRepartidor,
-    getListRepartidores,
+    getRepartidores,
     getListTokenRepartidores,
     updateRepartidor,
 }
