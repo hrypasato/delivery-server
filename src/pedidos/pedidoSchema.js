@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const PedidoSchema = new Schema({
     cliente:String,     //id de usuario cliente
-    motorizado:String,  //id de usuario motorizado
+    repartidor:String,  //id de usuario repartidor
     comision:Number,    //valor del transporte
     total:Number,       //valor total del servicio
     /**
