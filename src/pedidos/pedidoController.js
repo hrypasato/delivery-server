@@ -88,6 +88,28 @@ const createPedido = async (req = request, res = response) => {
     })
 }
 
+const updatePedido = async (req = request, res = response) => {
+    /**
+     * id:str -> identificador del pedido
+     * body:
+     * {
+     *  repartidor: string -> id del repartidor asignado
+     * }
+     */
+
+    const { id } = req.params;
+    const { repartidor } = req.body;
+    const data = { repartidor };
+    
+    const pedidoUpdated = await PedidoService.updatePedido(id, { ...data });
+    
+    res.json({
+        ok:true,
+        pedido:pedidoUpdated,
+    });
+
+}
+
 const completePedido = async (req = request, res = response) => {
     /**
      * id:str -> identificador del pedido
@@ -103,7 +125,7 @@ const completePedido = async (req = request, res = response) => {
     const { id } = req.params;
     
     const data = { finalizado:true };
-    //const pedidoUpdated = await PedidoService.updatePedido(id, { ...data });
+    const pedidoUpdated = await PedidoService.updatePedido(id, { ...data });
     
     res.json({
         ok:true,
@@ -117,5 +139,6 @@ module.exports = {
     getPedidoById,
     getPedidosPendientes,
     createPedido,
+    updatePedido,
     completePedido,
 }

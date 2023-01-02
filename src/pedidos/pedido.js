@@ -23,16 +23,8 @@ const createPedido = async ( args ) => {
     return newPedido;
 }
 
-const updatePedido = async ( filterparams, fields ) => {
-    const pedidoUpdated = await postgres.pedidos.update({
-        where:{
-            ...filterparams,
-        },
-        data:{
-            ...fields,
-        }
-    });
-
+const updatePedido = async ( { id }, data ) => {
+    const pedidoUpdated = await PedidoSchema.findByIdAndUpdate(id, { ...data }, { new: true })
     return pedidoUpdated;
 }
 

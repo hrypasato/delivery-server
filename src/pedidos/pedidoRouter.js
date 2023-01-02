@@ -8,6 +8,7 @@ router.get("/", controller.getAllPedidos);
 router.get("/byid/:id", controller.getPedidoById);
 router.get("/pendientes", controller.getPedidosPendientes);
 router.post("/", controller.createPedido);
+router.put("/:id", controller.updatePedido);
 router.put("/completed/:id", controller.completePedido);
 
 module.exports = router;
