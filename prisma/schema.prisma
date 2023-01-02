@@ -44,3 +44,14 @@ model repartidores {
   disponible Boolean? @default(true)
   usuarios   usuarios @relation(fields: [usuario], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
+
+model precios {
+  id     Int     @id @default(autoincrement())
+  precio Float?  @default(0) @db.Real
+  lugar  String? @default("") @db.VarChar
+}
+
+model roles {
+  id  Int    @id @default(autoincrement())
+  rol String @unique @db.VarChar
+}
