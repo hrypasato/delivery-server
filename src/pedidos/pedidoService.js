@@ -7,7 +7,7 @@ const getPedidos = async ( filterparams ) => {
 }
 
 const getPedido = async ( filterparams ) => {
-    const pedido = await Pedido.findPedido(filterparams);
+    const pedido = await Pedido.findPedido({ ...filterparams });
     return pedido;
 }
 

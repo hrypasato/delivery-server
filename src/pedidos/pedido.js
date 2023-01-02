@@ -10,18 +10,10 @@ const findPedidosBy = async ( filterparams ) => {
 }
 
 
-const findPedido = async ( filterparams ) => {
-    const pedidoResp = await postgres.pedidos.findUnique({
-        where:{
-            ...filterparams,
-        },
-        include:{
-            ...clientes,
-            ...productos,
-        }
-    });
-    const pedido = exclude(pedidoResp, pedidosExcludeFields);
-    return pedido;
+const findPedido = async ( { id } ) => {
+    const pedidoResp = await PedidoSchema.findById(id);
+    //const pedido = exclude(pedidoResp, pedidosExcludeFields);
+    return pedidoResp;
 }
 
 const createPedido = async ( args ) => {

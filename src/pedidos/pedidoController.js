@@ -11,11 +11,10 @@ const getAllPedidos = async (req = request, res = response) => {
     });
 }
 
-const getPedido = async (req = request, res = response) => {
+const getPedidoById = async (req = request, res = response) => {
     const { id } = req.params;
-    const pedidoId = parseInt(id);
 
-    const pedido = await PedidoService.getPedido({ id:pedidoId });
+    const pedido = await PedidoService.getPedido({ id });
 
     res.json({
         ok:true,
@@ -96,16 +95,15 @@ const completePedido = async (req = request, res = response) => {
      * 
      *  {
      *      ...,
-     *      complete:true,
+     *      finalizado:true,
      *  }
      * 
      */
     
     const { id } = req.params;
-    const pedidoId = parseInt(id);
     
-    const data = { completado:true, completed_at:new Date() };
-    const pedidoUpdated = await PedidoService.updatePedido(pedidoId, { ...data });
+    const data = { finalizado:true };
+    //const pedidoUpdated = await PedidoService.updatePedido(id, { ...data });
     
     res.json({
         ok:true,
@@ -116,7 +114,7 @@ const completePedido = async (req = request, res = response) => {
 
 module.exports = {
     getAllPedidos,
-    getPedido,
+    getPedidoById,
     getPedidosPendientes,
     createPedido,
     completePedido,
