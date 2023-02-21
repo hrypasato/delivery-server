@@ -13,10 +13,6 @@
         "dest": "src/index.js"
       },
       {
-        "src": "/docs",
-        "dest": "src/index.js"
-      },
-      {
         "src": "/",
         "dest": "src/index.js"
       }
