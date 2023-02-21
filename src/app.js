@@ -20,6 +20,8 @@ rutas.forEach( ruta => {
 })
 
 app.use('/docs',swaggerUI.serve ,swaggerUI.setup(swaggerDocument));
-
+app.get('/', (req, res) => { 
+    res.json({ status:'ok' })
+})
 
 module.exports = app;
